@@ -1,0 +1,151 @@
+.signup-container, .login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.signup-form, .login-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 50px;
+  background-color: #fff;
+}
+
+.signup-form h2, .login-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.signup-form form, .login-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-form input, .login-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signup-form button, .login-form button {
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signup-form button:hover, .login-form button:hover {
+  background-color: #357ab8;
+}
+
+.signup-links, .login-links {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.signup-links a, .login-links a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.signup-links a:hover, .login-links a:hover {
+  text-decoration: underline;
+}
+
+.signup-welcome, .login-welcome {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4a90e2;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.register-container {
+  display: flex;
+  height: 100vh;
+}
+
+.register-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 50px;
+  background-color: #fff;
+}
+
+.register-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.register-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.register-form button {
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-form button:hover {
+  background-color: #357ab8;
+}
+
+.register-links {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.register-links .link-button {
+  background: none;
+  border: none;
+  color: #4a90e2;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+  padding: 0;
+}
+
+.register-welcome {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4a90e2;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+}
