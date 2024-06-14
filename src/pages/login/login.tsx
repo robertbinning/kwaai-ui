@@ -7,10 +7,12 @@ import '../register/register.css'; // Import the CSS file
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
+    setError(null); // Reset error message
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('User logged in:', userCredential.user);
@@ -21,10 +23,11 @@ const Login: React.FC = () => {
         localStorage.setItem('isFirstLogin', 'false');
         navigate('/list'); // Navigate to the Agent Catalogue page on first login
       } else {
-        navigate('/home'); // Navigate to the dashboard page on subsequent logins
+        navigate('/list'); // Navigate to the dashboard page on subsequent logins
       }
     } catch (error: any) {
       console.error('Error logging in:', error.message); // Log the error message
+      setError('Invalid Login. Incorrect email or password.'); // Set error message
     }
   };
 
@@ -49,6 +52,7 @@ const Login: React.FC = () => {
           />
           <button type="submit">Login</button>
         </form>
+        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
         <div className="register-links">
           <span>Need an account? <button onClick={() => navigate('/register')} className="link-button">Register</button></span>
         </div>

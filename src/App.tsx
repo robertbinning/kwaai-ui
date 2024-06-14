@@ -16,12 +16,17 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={
             <PrivateRoute>
-              <Home />
+              <Login />
             </PrivateRoute>
           } />
           <Route path="/List" element={
             <PrivateRoute>
               <BotsList />
+            </PrivateRoute>
+          } />
+          <Route path="/Home" element={
+            <PrivateRoute>
+              <Home />
             </PrivateRoute>
           } />
         </Routes>
