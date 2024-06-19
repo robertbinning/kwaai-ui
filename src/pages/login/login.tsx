@@ -1,67 +1,53 @@
-import React, { useState, FormEvent } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../../firebase';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../register/register.css'; // Import the CSS file
+import { useAuth } from '../../context/AuthContext';
+import './login.css'; // Import the CSS file for styling
 
-const Login: React.FC = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
-    setError(null); // Reset error message
+  const handleLogin = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('User logged in:', userCredential.user);
-
-      // Check if it's the user's first login
-      const isFirstLogin = localStorage.getItem('isFirstLogin') === null;
-      if (isFirstLogin) {
-        localStorage.setItem('isFirstLogin', 'false');
-        navigate('/list'); // Navigate to the Agent Catalogue page on first login
-      } else {
-        navigate('/list'); // Navigate to the dashboard page on subsequent logins
+      const response = await axios.post('http://localhost:8000/login', {
+        email,
+      });
+      setMessage(response.data.message);
+      if (response.data.user_type) {
+        login();
+        if (response.data.user_type === 'faculty') {
+          navigate('/list');
+        } else if (response.data.user_type === 'student') {
+          navigate('/dashboard');
+        }
       }
-    } catch (error: any) {
-      console.error('Error logging in:', error.message); // Log the error message
-      setError('Invalid Login. Incorrect email or password.'); // Set error message
+    } catch (error) {
+      console.error('Error logging in:', error);
+      setMessage('Login failed');
     }
   };
 
   return (
-    <div className="register-container">
-      <div className="register-form">
-        <h2>Login</h2>
-        <form onSubmit={handleLogin}>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email Address"
-            required
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Your Password"
-            required
-          />
-          <button type="submit">Login</button>
-        </form>
-        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
-        <div className="register-links">
-          <span>Need an account? <button onClick={() => navigate('/register')} className="link-button">Register</button></span>
-        </div>
-      </div>
-      <div className="register-welcome">
-        <h2>Welcome back! Login here!</h2>
-      </div>
+    <div className="login-container">
+      <img src="/src/assets/kwaai.png" alt="Kwaai Logo" className="logo" />
+      <h2>Login</h2>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        className="login-input"
+      />
+      <button onClick={handleLogin} className="login-button">Login</button>
+      {message && <p className="login-message">{message}</p>}
+      <p className="register-link">
+        Don't have an account? <a href="/register">Register here</a>
+      </p>
     </div>
   );
-}
+};
 
 export default Login;
