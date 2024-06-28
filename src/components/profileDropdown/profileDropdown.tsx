@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../../firebase';
 import './profileDropdown.css'; // Import the CSS file
 
 const ProfileDropdown: React.FC = () => {
@@ -8,17 +9,10 @@ const ProfileDropdown: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch user data from the backend API
-    fetch('/api/user')
-      .then(response => response.json())
-      .then(data => {
-        if (data && data.email) {
-          setEmail(data.email);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
-      });
+    const user = auth.currentUser;
+    if (user) {
+      setEmail(user.email);
+    }
   }, []);
 
   const toggleDropdown = () => {
@@ -26,14 +20,11 @@ const ProfileDropdown: React.FC = () => {
   };
 
   const handleLogout = () => {
-    // Call the backend API to log out
-    fetch('/api/logout', { method: 'POST' })
-      .then(() => {
-        navigate('/login');
-      })
-      .catch(error => {
-        console.error('Error logging out:', error);
-      });
+    auth.signOut().then(() => {
+      navigate('/login');
+    }).catch((error) => {
+      console.error('Error logging out:', error);
+    });
   };
 
   return (

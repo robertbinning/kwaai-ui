@@ -74,16 +74,3 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
 def get_users(db: Session = Depends(get_db)):
     users = db.query(User).all()
     return users
-
-@app.get("/user", response_model=UserResponse)
-def get_current_user(email: str, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.email == email).first()
-    if db_user:
-        return db_user
-    else:
-        raise HTTPException(status_code=404, detail="User not found")
-
-@app.post("/logout")
-def logout():
-    # Implement logout logic if needed, e.g., token invalidation
-    return {"message": "Logout successful"}
